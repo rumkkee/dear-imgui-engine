@@ -10,7 +10,7 @@ Game::Game()
 	_gameOptions.AIPlaying = false;
 	_gameOptions.currentTurnNo = 0;
 	_gameOptions.gameNumber = -1;
-	_gameOptions.numberOfPlayers = 0;
+	_gameOptions.numberOfPlayers = 2;
 	_gameOptions.rowX = 0;
 	_gameOptions.rowY = 0;
 	_gameOptions.score = 0;
@@ -46,7 +46,7 @@ Game::~Game()
 void Game::setNumberOfPlayers(unsigned int n)
 {
 	_players.clear();
-	for (int i = 1; i <= n; i++)
+	for (unsigned int i = 1; i <= n; i++)
 	{
 		Player *player = Player::initWithGame(this);
 //		player->setName( std::format( "Player-{}", i ) );

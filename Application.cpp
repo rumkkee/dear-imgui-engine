@@ -30,27 +30,27 @@ namespace ClassGame {
 
                 //ImGui::ShowDemoWindow();
 
-                if (!game) return;
-                if (!game->getCurrentPlayer()) return;
+                // if (!game) return;
+                // if (!game->getCurrentPlayer()) return;
                 
                 ImGui::Begin("Settings");
-                ImGui::Text("Current Player Number: %d", game->getCurrentPlayer()->playerNumber());
-                ImGui::Text("Current Board State: %s", game->stateString().c_str());
+                // ImGui::Text("Current Player Number: %d", game->getCurrentPlayer()->playerNumber());
+                // ImGui::Text("Current Board State: %s", game->stateString().c_str());
 
-                if (gameOver) {
-                    ImGui::Text("Game Over!");
-                    ImGui::Text("Winner: %d", gameWinner);
-                    if (ImGui::Button("Reset Game")) {
-                        game->stopGame();
-                        game->setUpBoard();
-                        gameOver = false;
-                        gameWinner = -1;
-                    }
-                }
+                // if (gameOver) {
+                //     ImGui::Text("Game Over!");
+                //     ImGui::Text("Winner: %d", gameWinner);
+                //     if (ImGui::Button("Reset Game")) {
+                //         game->stopGame();
+                //         game->setUpBoard();
+                //         gameOver = false;
+                //         gameWinner = -1;
+                //     }
+                // }
                 ImGui::End();
 
                 ImGui::Begin("GameWindow");
-                game->drawFrame();
+                // game->drawFrame();
                 ImGui::End();
         }
 
@@ -60,15 +60,15 @@ namespace ClassGame {
         //
         void EndOfTurn() 
         {
-            Player *winner = game->checkForWinner();
-            if (winner)
-            {
-                gameOver = true;
-                gameWinner = winner->playerNumber();
-            }
-            if (game->checkForDraw()) {
-                gameOver = true;
-                gameWinner = -1;
-            }
+            // Player *winner = game->checkForWinner();
+            // if (winner)
+            // {
+            //     gameOver = true;
+            //     gameWinner = winner->playerNumber();
+            // }
+            // if (game->checkForDraw()) {
+            //     gameOver = true;
+            //     gameWinner = -1;
+            // }
         }
 }

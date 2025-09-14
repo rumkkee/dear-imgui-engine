@@ -54,10 +54,26 @@ Bit* TicTacToe::PieceForPlayer(const int playerNumber)
 void TicTacToe::setUpBoard()
 {
     // here we should call setNumberOfPlayers to 2 and then set up the game options so the mouse knows to draw a 3x3 grid
+    //_gameOptions.numberOfPlayers = 2;
+    Game::setNumberOfPlayers(2);
     // _gameOptions has a rowX and rowY property we should set to 3
+    _gameOptions.rowX = 3;
+    _gameOptions.rowY = 3;
     // then we need to setup our 3x3 array in _grid with the correct position of the square, and load the "square.png" sprite for each square
     // we will use the initHolder function on each square to do this
+    for(int i = 0; i < 2; i++){
+        for(int k = 0; k < 2; k++){
+
+            getHolderAt(i,k).initHolder(ImVec2((float)i,(float)k), ImVec4(1,1,1,1), "square.png");
+            //Square::initHolder(ImVec2(i,k), ImVec4(1,1,1,1), "square.png");
+        }
+    }
+
+    std::cout << "Here";
+    
     // finally we should call startGame to get everything going
+    Game::startGame();
+    std::cout << "Then there";
 }
 
 //
