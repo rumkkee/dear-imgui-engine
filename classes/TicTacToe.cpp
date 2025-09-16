@@ -125,6 +125,11 @@ void TicTacToe::stopGame()
 {
     // clear out the board
     // loop through the 3x3 array and call destroyBit on each square
+    for(int i = 0; i < 2; i++){
+        for(int k = 0; k < 2; k++){
+            _grid[i][k].destroyBit();
+        }
+    }
 }
 
 //
