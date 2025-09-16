@@ -188,7 +188,7 @@ Player* TicTacToe::checkForWinner()
 
         Player * p1 = TicTacToe::ownerAt(arr[i][0]);
         if(p1 == ownerAt(arr[i][1]) && p1 == ownerAt(arr[i][2])){
-            std::cout << "Win found" << std::endl;
+            //std::cout << "Win found" << std::endl;
             return p1;
         }
     }
@@ -200,7 +200,13 @@ bool TicTacToe::checkForDraw()
     // is the board full with no winner?
     // if any square is empty, return false
     // otherwise return true
-    return false;
+    int freeSquares = 0;
+    for(int i = 0; i < 9; i++){
+        if(ownerAt(i) == nullptr){
+            freeSquares++;
+        }
+    }
+    return freeSquares > 0 ? false : true;
 }
 
 //
