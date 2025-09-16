@@ -137,7 +137,11 @@ Player* TicTacToe::ownerAt(int index ) const
     // x = index % 3 
     // if there is no bit at that location (in _grid) return nullptr
     // otherwise return the owner of the bit at that location using getOwner()
-    return nullptr;
+    int y = index / 3;
+    int x = index % 3;
+    std::cout << "Checking at val: " << index << std::endl;
+    Bit * bit = _grid[x][y].bit();
+    return bit ? bit->getOwner() : nullptr;
 }
 
 Player* TicTacToe::checkForWinner()
@@ -161,6 +165,33 @@ Player* TicTacToe::checkForWinner()
 
     // Hint: Consider using an array to store the winning combinations
     // to avoid repetitive code
+    
+
+    std::cout << "Checking for winner " << std::endl;
+    
+    // Start getting the players of a row.
+    // If all three players are the same, announce the winning row
+    //Player * p1 = ownerAt(0);
+    int arr[8][3] = {
+        {0,1,2},
+        {3,4,5},
+        {6,7,8},
+        {0,3,6},
+        {1,4,7},
+        {2,5,8},
+        {0,4,8},
+        {2,5,6}
+    };
+    
+    
+    for(int i = 0; i < 7; i++){
+
+        Player * p1 = TicTacToe::ownerAt(arr[i][0]);
+        if(p1 == ownerAt(arr[i][1]) && p1 == ownerAt(arr[i][2])){
+            std::cout << "Win found" << std::endl;
+            return p1;
+        }
+    }
     return nullptr;
 }
 
