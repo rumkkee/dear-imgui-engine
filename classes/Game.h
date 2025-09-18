@@ -82,6 +82,7 @@ public:
     
 	void		setNumberOfPlayers(unsigned int playerCount);
 	void		setAIPlayer(unsigned int playerNumber);
+	void		removeAIPlayer(unsigned int playerNumber);
     void        scanForMouse();
 	// function to return pointer to the [][] array of bitholders
 	virtual BitHolder &getHolderAt(const int x, const int y) = 0;

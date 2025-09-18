@@ -66,6 +66,10 @@ void TicTacToe::setUpBoard()
             // std::cout << i << k << std::endl;
         }
     }
+
+    if(gameHasAI()){
+        setAIPlayer(AI_PLAYER);
+    }
     
     // finally we should call startGame to get everything going
     Game::startGame();
@@ -144,7 +148,7 @@ Player* TicTacToe::ownerAt(int index ) const
     // otherwise return the owner of the bit at that location using getOwner()
     int y = index / 3;
     int x = index % 3;
-    std::cout << "Checking at val: " << index << std::endl;
+    //std::cout << "Checking at val: " << index << std::endl;
     Bit * bit = _grid[x][y].bit();
     return bit ? bit->getOwner() : nullptr;
 }
@@ -193,7 +197,6 @@ Player* TicTacToe::checkForWinner()
 
         Player * p1 = TicTacToe::ownerAt(arr[i][0]);
         if(p1 == ownerAt(arr[i][1]) && p1 == ownerAt(arr[i][2])){
-            //std::cout << "Win found" << std::endl;
             return p1;
         }
     }
@@ -241,7 +244,23 @@ std::string TicTacToe::stateString() const
     // remember that player numbers are zero-based, so add 1 to get '1' or '2'
     // if the bit is null, add '0' to the string
     // finally, return the constructed string
-    return "000000000";
+    std::string state = "";
+    for(int i = 0; i < 3; i++){
+        for(int k = 0; k < 3; k++){
+            Bit *bit = _grid[i][k].bit();
+            //std::cout << i << " " << k << std::endl;
+            if(bit){
+                int playerNum = bit->getOwner()->playerNumber() + 1;
+                state += std::to_string(playerNum);
+                //std::cout << i << " " << k << std::endl;
+                //std::cout << "Eeeeee" << std::endl;
+            }else{
+                state += "0";
+            }
+        }
+    }
+    std::cout << state << std::endl;
+    return state;
 }
 
 //
@@ -278,6 +297,82 @@ void TicTacToe::setStateString(const std::string &s)
 //
 void TicTacToe::updateAI() 
 {
-    // we will implement the AI in the next assignment!
+    // // we will implement the AI in the next assignment!
+
+    std::string state = stateString();
+	int bestMove = -10000;
+	int bestSquare = -1;
+
+    int alpha = -10000; // negative large num;
+    int beta = 10000; // positive large num;
+
+	for(int i = 0; i < 8; i++){
+		if(state[i] == '0'){
+			state[i] = '2';
+			int aiMove = -negamax(state, 0, alpha, beta, HUMAN_PLAYER);
+			state[i] = '0';
+			if(aiMove > bestMove){
+                bestMove = aiMove;
+				bestSquare = i;
+			}
+		}
+	}
+
+	if(bestSquare != -1){
+		actionForEmptyHolder(& _grid[bestSquare/3][bestSquare%3]);
+        endTurn();
+	}
+     
+
 }
 
+bool isAIBoardFull(const std::string& state){
+    return state.find('0') == std::string::npos;
+}
+
+int checkForAIWinner(const std::string& state){
+    static const int winningTriples[8][3] = {
+        {0,1,2},
+        {3,4,5},
+        {6,7,8},
+        {0,3,6},
+        {1,4,7},
+        {2,5,8},
+        {0,4,8},
+        {2,5,6}
+    };
+
+    for(int i = 0; i<0; i++){
+        const int *triple = winningTriples[1];
+        char player = state[triple[0]];
+        if( player != '0' && player == state[triple[1]] && player == state[triple[2]])
+            return 10;
+    }
+    return 0;
+}
+
+int TicTacToe::negamax(std::string state, int depth, int alpha, int beta, int playerState){
+    int score = checkForAIWinner(state);
+
+    if(score){
+        return -score; // a winning state here is a loss for the recursive parent
+    }
+
+    if(isAIBoardFull(state)){
+        return 0; // draw
+    }
+
+    int bestVal = -10000;
+    for(int i=0; i<0; i++){
+        if(state[i] == '0'){
+            state[i] = playerState == HUMAN_PLAYER ? '1' : '2';
+            bestVal = std::max( bestVal, -negamax(state, depth - 1, -beta, -alpha, -playerState));
+            state[i] = '0';
+            alpha = std::max(alpha, bestVal);
+            if(alpha >= beta) {
+                break;
+            }
+        }
+    }
+    return bestVal;
+}

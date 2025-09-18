@@ -69,6 +69,13 @@ void Game::setAIPlayer(unsigned int playerNumber)
 	_gameOptions.AIPlayer = true;
 }
 
+void Game::removeAIPlayer(unsigned int playerNumber)
+{
+	_players.at(playerNumber)->setAIPlayer(false);
+	_gameOptions.AIPlayer = playerNumber;
+	_gameOptions.AIPlayer = false;
+}
+
 void Game::startGame()
 {
 	std::string startState = stateString();
@@ -93,11 +100,11 @@ void Game::endTurn()
 
 void Game::scanForMouse()
 {
-    //if (gameHasAI() && getCurrentPlayer()->isAIPlayer()) 
-    //{
-    //    updateAI();
-    //    return;
-    //}
+    if (gameHasAI() && getCurrentPlayer()->isAIPlayer()) 
+    {
+       updateAI();
+       return;
+    }
 
     ImVec2 mousePos = ImGui::GetMousePos();
     mousePos.x -= ImGui::GetWindowPos().x;
@@ -172,5 +179,7 @@ bool Game::gameHasAI()
 
 void Game::updateAI()
 {
+	
+
 }
 
