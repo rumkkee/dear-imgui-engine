@@ -16,3 +16,6 @@ This wasn't too hard once I understood that the UI is re-rendered every frame, s
 I checked out the demo project to understand how to handle button clicks. It's essentially `if(button("button name")){ do thing; }`
 
 That piece of code both renders the button, and allows for something to happen when its clicked.
+
+## Update to Game.cpp and Game.h
+In order to make my "vs Human" button work, I decided to make a function called removeAIPlayer(int) in the Game class that inverts the actions of setAIPlayer(int). I then call this new function whenever the "vs Human" button gets pressed.
