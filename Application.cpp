@@ -18,6 +18,7 @@ namespace ClassGame {
         {
             game = new TicTacToe();
             game->setUpBoard();
+            //game->setAIPlayer(1);
         }
 
         //
@@ -28,7 +29,7 @@ namespace ClassGame {
         {
                 ImGui::DockSpaceOverViewport();
 
-                //ImGui::ShowDemoWindow();
+                ImGui::ShowDemoWindow();
 
                 if (!game) return;
                 if (!game->getCurrentPlayer()) return;
@@ -36,6 +37,19 @@ namespace ClassGame {
                 ImGui::Begin("Settings");
                 ImGui::Text("Current Player Number: %d", game->getCurrentPlayer()->playerNumber());
                 ImGui::Text("Current Board State: %s", game->stateString().c_str());
+                if(game->stateString() == game->initialStateString()){
+                    ImGui::Text("Game Mode Selector:"); ImGui::SameLine();
+                    if(ImGui::Button("vs Human") && game->gameHasAI()){
+                        game->removeAIPlayer(1);
+                    }
+                    
+                    ImGui::SameLine();
+                    if(ImGui::Button("vs AI")){
+                        game->setAIPlayer(1);
+                    }
+                }
+                
+                ImGui::Text("Current Mode: "); ImGui::SameLine(); ImGui::Text(game->_gameOptions.AIPlayer ? "AI" : "Human");
 
                 if (gameOver) {
                     ImGui::Text("Game Over!");
@@ -70,5 +84,10 @@ namespace ClassGame {
                 gameOver = true;
                 gameWinner = -1;
             }
+            // else if(game->gameHasAI()){
+            //     if(game->getCurrentPlayer()->playerNumber() == 1){
+            //         game->updateAI();
+            //     }
+            // }
         }
 }
