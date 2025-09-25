@@ -32,7 +32,7 @@ public:
     bool        gameHasAI() override { return true; }
     BitHolder &getHolderAt(const int x, const int y) override { return _grid[y][x]; }
     //bool isAIBoardFull(const std::string& state);
-    int negamax(std::string state, int depth, int alpha, int beta, int playerState);
+    int negamax(std::string& state, int depth, int alpha, int beta, int playerState);
     //int checkForAIWinner(const std::string& state);
 private:
     Bit *       PieceForPlayer(const int playerNumber);
